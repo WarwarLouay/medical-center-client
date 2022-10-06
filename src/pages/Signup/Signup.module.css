@@ -1,0 +1,63 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .bg{
+    background-image: url('../../images/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+  
+  ::-webkit-scrollbar{
+    display: none;
+  }
+
+.Select{
+    color: black;
+    width: 80%;
+    text-transform: none !important;
+    letter-spacing: normal !important;
+}
+
+.Input{
+   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+   width: 80%;
+   height: 3rem;
+   padding: 1rem;
+   border: none;
+   outline: none;
+   color: #3c354e;
+   font-size: 1rem;
+   font-weight: bold;
+   margin-bottom: 3%;
+}
+
+.Input:focus{
+   display: inline-block;
+   backdrop-filter: blur(12rem);
+}
+
+.Input::placeholder{
+   color: #3c354e;
+   font-weight: 400;
+   font-size: 1rem;
+}
+
+.Input.invalid{
+   outline: 2px solid #B00020;
+}
+
+.haveAccount{
+   text-align: center;
+   color: black;
+   text-transform: none !important;
+   letter-spacing: normal !important;
+   padding-bottom: 5%;
+}

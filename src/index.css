@@ -1,13 +1,98 @@
-body {
+*{
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.home, .reports, .products{
+  display: flex;
+  height: 90vh;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+}
+
+.col-6{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.col-6 label{
+  font-size: 2rem;
+  font-weight: bold;
+  padding-bottom: 2rem;
+}
+
+.col-6 input{
+  width: 50%;
+  margin-bottom: 2rem;
+  text-align: center;
+  padding: 1rem 2rem;
+  border-radius: 2rem;
+  border: 2px solid black;
+  font-weight: bold;
+}
+
+.deleteIcon{
+  font-size: 25px;
+  color: #ed5249;
+  right: 0;
+}
+
+.deleteIcon:hover{
+  cursor: pointer;
+}
+
+.nav-title{
+  font-weight: 600;
+}
+
+.serach-bar{
+  width: 50%;
+}
+
+.serach-bar .input-search{
+  font-weight: 500;
+}
+
+.card-text{
+  text-align: center;
+  margin-top: 10%;
+  margin-left: 5%;
+}
+
+.card-text:hover{
+  cursor: pointer;
+}
+
+.col-3 a{
+  text-decoration: none;
+  color: black;
+}
+
+.col-3 a:hover{
+  color: black;
+}
+
+.title{
+  font-weight: bold;
+}
+
+.location{
+  color: grey;
+}
+
+.noAvailable{
+  text-align: center;
+  margin-top: 20%;
+}
+
+.specName{
+  text-transform: capitalize;
+}
+
+.messageIcons{
+  margin-left: 15%;
+  font-size: 30px;
 }
