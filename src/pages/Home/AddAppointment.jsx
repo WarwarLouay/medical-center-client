@@ -17,9 +17,11 @@ const AddAppoinmtent = () => {
 
   let doctorId = sessionStorage.getItem('user');
 
-  if(doctorId.length < 0 || doctorId === '' || doctorId === null){
-    navigate('/login');
-  }
+  React.useEffect(() => {
+    if(!doctorId){
+      navigate('/login');
+    }
+  },[doctorId, navigate]);
 
   const [date, setDate] = React.useState('');
   const [time, setTime] = React.useState('');

@@ -5,6 +5,7 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { SideBarData } from '../SidebarData';
 import { IconContext } from 'react-icons';
 import './Navbar.css';
+import { BiLogOut } from 'react-icons/bi';
 
 const NavBar = () => {
 
@@ -14,12 +15,17 @@ const NavBar = () => {
         setSideBar(!sidebar);
     };
 
+    const logoutHandler = () => {
+        sessionStorage.setItem('user', '');
+      };
+
   return (
     <React.Fragment>
     <IconContext.Provider value={{ color: '#fff' }}>
     <div className='navbar'>
       <Link to='#' className='menu-bars'>
         <FaBars onClick={showSideBar} />
+        <BiLogOut onClick={logoutHandler} style={{marginRight: '2%'}} />
       </Link>
     </div>
     <nav className={sidebar ? 'nav-menu active' : 'nav-menu'}>

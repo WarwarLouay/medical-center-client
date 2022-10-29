@@ -34,6 +34,7 @@ const Login = () => {
       } else {
         sessionStorage.setItem("role", response.data.user.role);
         sessionStorage.setItem("user", response.data.user._id);
+        sessionStorage.setItem("full_name", response.data.user.full_name);
         dispatch({ type:  isLogin});
         navigate('/');
       }

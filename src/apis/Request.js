@@ -83,6 +83,21 @@ class Request {
         const link = "/api/specializations/search/" + key;
         return await this.api.get(link, key);
     }
+
+    async joinRoom(data) {
+        const link = "/api/joinRoom/";
+        return await this.api.post(link, data);
+    }
+
+    async sendMessage(data) {
+        const link = "/api/sendMessage";
+        return await this.api.post(link, data);
+    }
+
+    async listMessages(data) {
+        const link = "/api/messages/list/";
+        return await this.api.post(link, data);
+    }
 }
 
 export default Request;
