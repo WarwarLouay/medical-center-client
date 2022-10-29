@@ -1,18 +1,18 @@
 import React from 'react';
 import UserNavbar from '../../Components/UserNavbar';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Card, Col, Row, Button, Modal } from 'react-bootstrap';
 import Request from '../../apis/Request.js';
 import Select from 'react-select';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useNavigate } from 'react-router-dom';
 import { Elements } from '@stripe/react-stripe-js';
 import Checkout from '../../Components/Checkout/Checkout';
 import { loadStripe } from '@stripe/stripe-js';
 import { FadeLoader  } from 'react-spinners';
+import { TbMessageCircle } from 'react-icons/tb';
 
-const Doctors = () => {
+const Doctors = ({ socket }) => {
 
   const stripePromise = loadStripe('pk_test_51LolXpGcg3WoyYuNTUx8gRCZReulNvV1W');
 
@@ -22,9 +22,11 @@ const Doctors = () => {
 
     const patientId = sessionStorage.getItem('user');
 
-    if(patientId.length < 0 || patientId === '' || patientId === null){
+    React.useEffect(() => {
+      if(!patientId){
         navigate('/login');
       }
+    },[patientId, navigate]);
 
     const [loading, setLoading] = React.useState(false);
     const [Doctors, setDoctors] = React.useState([]);
@@ -34,9 +36,23 @@ const Doctors = () => {
     const [validTime, setValidTime] = React.useState([]);
     const [selectedTime, setSelectedTime] = React.useState('');
 
+    const joinRoom = async (e) => {
+
+      let doctorId = e;
+      const data = {patientId, doctorId};
+      const response = await request.joinRoom(data);
+      let room = response.data[0]._id;
+
+      if(response) {
+        socket.emit('join_room', room);
+        navigate('/chat');
+        sessionStorage.setItem('room', room);
+      }
+    };
+
     React.useEffect(() => {
         callPage();
-      });
+      }, []);
 
       async function callPage() {
         const response = await request.getById(params.id);
@@ -115,6 +131,7 @@ const Doctors = () => {
                         <Card.Title className='location' style={{fontSize: '15px'}}>{item.city}</Card.Title>
                         <Card.Title className='location' style={{fontSize: '15px'}}>{item.phone}</Card.Title>
                         <Button onClick={()=>{setSmShow(true); setDoctorId(item._id)}}>Take Appointment</Button>
+                        <TbMessageCircle className='messageIcon' onClick={() => joinRoom(item._id)} />
                     </Card.Body>
                 </Card>
             </Col>

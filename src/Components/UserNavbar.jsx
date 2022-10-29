@@ -9,6 +9,7 @@ const UserNavbar = ({onSearch}) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    sessionStorage.setItem('user', '');
     navigate('/login');
   };
 
