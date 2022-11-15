@@ -31,6 +31,8 @@ const Doctors = ({ socket }) => {
     const [loading, setLoading] = React.useState(false);
     const [Doctors, setDoctors] = React.useState([]);
     const [smShow, setSmShow] = React.useState(false);
+    const [payChatModal, setPayChatModal] = React.useState(false);
+    const [thankyouForPay, setThankyouForPayModal] = React.useState(false);
     const [doctorId, setDoctorId] = React.useState('');
     const [selectedDate, setSelectedDate] = React.useState('');
     const [validTime, setValidTime] = React.useState([]);
@@ -41,12 +43,14 @@ const Doctors = ({ socket }) => {
       let doctorId = e;
       const data = {patientId, doctorId};
       const response = await request.joinRoom(data);
-      let room = response.data[0]._id;
 
-      if(response) {
+      if(response.status === 200) {
+        let room = response.data[0]._id;
         socket.emit('join_room', room);
         navigate('/chat');
         sessionStorage.setItem('room', room);
+      } else {
+        setPayChatModal(true);
       }
     };
 
@@ -140,7 +144,7 @@ const Doctors = ({ socket }) => {
         </Row>
 
         <Modal
-        size="sm"
+        size="md"
         show={smShow}
         onHide={() => {setSmShow(false); setSelectedDate(''); setSelectedTime(''); setValidTime([])}}
         aria-labelledby="example-modal-sizes-title-sm"
@@ -166,6 +170,52 @@ const Doctors = ({ socket }) => {
         <Modal.Footer>
             {loading && <FadeLoader color="#409DBA" />}
             {!loading && <Button onClick={handleSubmit}>Submit</Button>}
+        </Modal.Footer>
+      </Modal>
+
+
+
+      <Modal
+        size="md"
+        show={payChatModal}
+        onHide={() => {setPayChatModal(false);}}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            Pay 10$ to start chatting
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <Elements stripe={stripePromise}>
+              <Checkout />
+            </Elements>
+        </Modal.Body>
+        <Modal.Footer>
+            {loading && <FadeLoader color="#409DBA" />}
+            {!loading && <Button onClick={() => {setThankyouForPayModal(true); setPayChatModal(false);}}>Submit</Button>}
+        </Modal.Footer>
+      </Modal>
+
+
+
+      <Modal
+        size="md"
+        show={thankyouForPay}
+        onHide={() => {setThankyouForPayModal(false);}}
+        aria-labelledby="example-modal-sizes-title-sm"
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="example-modal-sizes-title-sm">
+            Thank you
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+            <p>You can now start chatting</p>
+        </Modal.Body>
+        <Modal.Footer>
+            {loading && <FadeLoader color="#409DBA" />}
+            {!loading && <Button onClick={() => setThankyouForPayModal(false)}>Ok</Button>}
         </Modal.Footer>
       </Modal>
       <ToastContainer />
